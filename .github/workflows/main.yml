@@ -13,12 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
     
-      - name: Set Execution Policy and Run Script
-        shell: pwsh
-        run: |
-          Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process -Force
-          . 'C:\actions-runner\_work\_temp\3d5a63c9-8b55-46bd-a8c0-2a327f4a3f9e.ps1'
-          
+               
       - name: Deploy to Local IIS
         env:
           IIS_PATH: 'C:\CICD'  # IIS directory on local PC
