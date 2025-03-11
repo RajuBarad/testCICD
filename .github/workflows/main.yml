@@ -1,0 +1,26 @@
+name: Deploy Static HTML Pages to Local IIS
+
+on:
+  push:
+    branches:
+      - main   # Trigger workflow on push to 'main' branch
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, windows]  # Use self-hosted runner on Windows
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Deploy to Local IIS
+        env:
+          IIS_PATH: 'C:\CICD'  # IIS directory on local PC
+          PUBLISH_FOLDER: ./    # Path to the static files (use current directory)
+
+        run: |
+          # Copy the static files to the IIS directory
+          Copy-Item -Path $env:PUBLISH_FOLDER\* -Destination $env:IIS_PATH -Recurse -Force
+
+          # Optionally, restart IIS after deployment
+          iisreset
